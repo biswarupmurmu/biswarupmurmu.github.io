@@ -1,0 +1,70 @@
+<style>
+    .intro {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        width: 100%;
+    }
+
+    .hero {
+        width: min(100%, 15rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border: var(--dark-container-box-border, var(--light-container-box-border));
+        border-top-right-radius: var(--border-radius);
+        border-top-left-radius: var(--border-radius);
+    }
+
+    .hero_text {
+        text-align: center;
+        text-transform: lowercase;
+        width: 100%;
+        padding: 0.2rem;
+        border: var(--dark-container-box-border, var(--light-container-box-border));
+        border-top: none;
+        background-color: var(--dark-text-background-color, var(--light-text-background-color));
+        border-bottom-left-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+    }
+
+    .about_me {
+        text-align: justify;
+        width: min(100%, 30rem);
+    }
+
+    .about_me p:nth-child(2) {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+</style>
+
+{% if site.data.index.index.intro %}
+<div class="intro">
+    <div class="hero">
+        <img src="{{ site.data.index.index.intro.image }}" alt="{{site.name}}">
+        <div class="hero_text">
+            <h3>{{site.name}}</h3>
+            <p>{{ site.data.index.index.intro.whoami }}</p>
+        </div>
+    </div>
+    <div class="about_me">
+        <p class="tag_open">&ltabout&gt</p>
+        <p>
+            {{ site.data.index.index.intro.about }}
+            <br><br>
+            <span class="italic">email : {{site.email}}</span>
+        </p>
+        <p class="tag_close">&lt/about&gt</p>
+    </div>
+</div>
+{% endif %}
