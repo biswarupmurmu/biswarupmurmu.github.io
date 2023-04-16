@@ -10,3 +10,10 @@ collections:
   posts:
     output: true
     permalink: /blog/:categories/:year/:title
+
+links:
+  github: biswarupmurmu
+  linkedin: biswarupmurmu
+  medium: biswarupmurmu
+  twitter: biswarupmurmu_
+  leetcode: biswarupmurmu
