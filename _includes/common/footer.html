@@ -3,6 +3,12 @@
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
+    
+    .theme_toggle_container {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 1rem;
+    }
 
     .social_media_icons_container {
         display: flex;
@@ -33,6 +39,9 @@
 </style>
 
 <div class="footer_container">
+    <div class="theme_toggle_container">
+        {% include /common/theme_toggle.html %}
+    </div>
     <div class="social_media_icons_container">
         <li>
             <a href="https://github.com/{{ site.links.github }}">
