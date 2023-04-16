@@ -42,9 +42,9 @@
     --dark-button-text-color: rgb(23, 179, 106);
     --dark-button-background-color: rgb(43, 27, 43);
     --dark-button-border: 0.1rem solid rgb(126, 39, 126);
-    --dark-hover-button-text-color: rgb(24, 220, 100);
-    --dark-hover-button-background-color: rgb(31, 15, 26);
-    --dark-hover-button-border: 0.1rem solid rgb(63, 17, 31);
+    --dark-button-text-color-hover: rgb(24, 220, 100);
+    --dark-button-background-color-hover: rgb(31, 15, 26);
+    --dark-button-border-hover: 0.1rem solid rgb(63, 17, 31);
 
     --dark-container-box-border: 0.05rem solid var(--dark-accent-color);
 }
