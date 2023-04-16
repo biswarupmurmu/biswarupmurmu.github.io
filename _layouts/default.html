@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% if site.name %}
+        <meta name="author" content="{{ site.name }}">
+        {% endif %}
+
+        {% assign description = '' %}
+        {% if page.description %}
+        {% assign description = page.description | strip_html | strip_newlines | truncate: 160 %}
+        {% else %}
+        {% assign description = site.description %}
+        {% endif %}
+        <meta name="description" content="{{ description }}">
+
+        {% if page.tags %}
+        <meta name="keywords" content="{{ page.tags | join: ', ' }}">
+        {% endif %}
+
+        {% assign title = '' %}
+        {% if page.title %}
+        {% assign title = page.title | append: " | " | append: site.title %}
+        {% else %}
+        {% assign title = site.title %}
+        {% endif %}
+        <title>{{title}}</title>
+
+        <link rel="stylesheet" href="/css/main/main.css">
+        <link rel="shortcut icon" href="/assets/favicon/favicon.png" type="image/x-icon">
+
+    </head>
+    <body theme ="light">
+
+        {{content}}
+
+        <script src="/javascript/main.js"></script>
+    </body>
+
+</html>

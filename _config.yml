@@ -1,0 +1,12 @@
+title: Biswarup Murmu # Site title
+name: Biswarup Murmu
+email: biswarupmurmu@proton.me
+mobile_number: +91 8582928274
+
+description: >-
+  Biswarup Murmu's personal website
+
+collections:
+  posts:
+    output: true
+    permalink: /blog/:categories/:year/:title
