@@ -2,4 +2,82 @@
 layout: blank
 permalink: /tags/
 ---
-<h1>tags</h1>
+<style>
+    .theme_toggle_and_back {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        width: min(100%, 50rem);
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .theme_toggle_and_back h4:hover {
+        cursor: pointer;
+    }
+
+    .tags_and_posts {
+        margin: 0 auto;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        width: fit-content;
+        max-width: 30rem;
+    }
+
+    .tags_and_posts ul {
+        padding-left: 2rem;
+        padding-top: 0.5rem;
+        padding-bottom: 1rem;
+    }
+
+    .tags_and_posts ul li a:hover {
+        text-decoration: underline;
+    }
+
+    .tags_and_posts li a::before {
+        content: '-';
+        position: absolute;
+        margin-left: -1rem;
+    }
+
+    @media (min-width:30rem) {
+        .tags_and_posts :is(h4, ul) {
+            padding-top: 0.5rem;
+            padding-bottom: 1rem;
+        }
+
+        .tags_and_posts {
+            display: grid;
+            grid-template-columns: 0fr 1fr;
+            gap: 1rem;
+            row-gap: 2rem;
+        }
+
+        .tags_and_posts ul:hover {
+            border-radius: var(--border-radius);
+            background-color: var(--dark-text-background-color-hover, var(--light-text-background-color-hover));
+            color: var(--dark-hover-text-color, var(--light-hover-text-color));
+        }
+    }
+</style>
+
+<div class="theme_toggle_and_back">
+    <h4 onclick="history.back()">&lt&lt back</h4>
+    {% include /common/theme_toggle.html %}
+</div>
+<h2 style="text-align: center;">&lttags&gt</h2>
+
+{% assign sorted_tags = site.tags | sort %}
+<div class="tags_and_posts">
+    {% for tag in sorted_tags %}
+
+    <h4 id="{{tag[0]}}">&lt{{tag[0]}}&gt</h4>
+
+    <ul>
+        {% for post in tag[1] %}
+        <li><a href="{{post.url}}">{{post.title}}</a></li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</div>
