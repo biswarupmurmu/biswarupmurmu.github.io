@@ -6,6 +6,7 @@ let previous_settings = localStorage.getItem("theme");
 if (previous_settings == "dark") {
     theme_toggle.checked = true;
     body.setAttribute('theme', 'dark');
+    code_snippet_theme()
 }
 
 theme_toggle.addEventListener('change', function () {
@@ -17,4 +18,15 @@ theme_toggle.addEventListener('change', function () {
         body.setAttribute('theme', 'light');
         localStorage.setItem("theme", null);
     }
+    code_snippet_theme()
 })
+
+function code_snippet_theme() {
+    var theme = localStorage.getItem("theme")
+    if (theme == "dark") {
+        document.querySelector("#code_snippet_theme").setAttribute("href","/css/code_theme/dark.css")
+    }
+    else {
+        document.querySelector("#code_snippet_theme").setAttribute("href","/css/code_theme/light.css")
+    }
+}
