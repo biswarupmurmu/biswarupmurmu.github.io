@@ -1,0 +1,72 @@
+
+#the_post pre {
+    overflow-x: auto;
+}
+
+#the_post p code {
+    font-family: monospace;
+    padding: 0.1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    background-color: var(--dark-text-background-color, var(--light-text-background-color));
+    border-radius: var(--border-radius);
+}
+
+#the_post :is(p, figure, ul, ol){
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+}
+#the_post :is(h1,h2,h3,h4){
+    padding-bottom: 0.5rem;
+}
+
+#the_post a {
+    text-decoration: underline;
+}
+
+#the_post li {
+    list-style: lower-alpha;
+    list-style-position: inside;
+}
+
+#the_post blockquote {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    background-color: var(--dark-text-background-color, var(--light-text-background-color));
+}
+
+#the_post blockquote p {
+    padding: 0;
+    text-align: justify;
+}
+
+#the_post img {
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+#the_post .table {
+    overflow-x: auto;
+}
+
+#the_post table {
+    padding: 1rem;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#the_post :is(td,th) {
+    border: 0.05rem solid var(--dark-text-color, var(--light-text-color));
+    text-align: left;
+    padding: 0.5rem;
+    text-overflow: clip;
+}
+
+#the_post tr:nth-child(even) {
+    background-color: var(--dark-text-background-color, var(--light-text-background-color));
+}
