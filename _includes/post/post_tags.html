@@ -1,0 +1,24 @@
+<style>
+    .post_tags a {
+        padding: 0.15rem;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+        border-radius: var(--border-radius);
+        text-decoration: underline;
+    }
+
+    .post_tags a:hover {
+        background-color: var(--dark-text-background-color-hover-strong, var(--light-text-background-color-hover-strong));
+        color: var(--dark-text-color-hover-strong, var(--light-text-color-hover-strong));
+    }
+
+</style>
+<div class="post_tags">
+    <p class="tag_open">&lttags&gt</p>
+    <div style="padding-left: 1rem; padding-right: 1rem;">
+        {% for tag in page.tags %}
+        <a href="{% link pages/tags/tags.html %}#{{tag}}">{{tag}}</a>
+        {% endfor %}
+    </div>
+    <p class="tag_close">&lttags&gt</p>
+</div>
