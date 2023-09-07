@@ -29,17 +29,13 @@
         {% endif %}
         <title>{{title}}</title>
 
-        <link rel="stylesheet" href="/css/main/main.css">
-        <link rel="stylesheet" href="/css/post/post.css">
-        <link id ="code_snippet_theme" rel="stylesheet" href="/css/code_theme/light.css">
-        <link rel="shortcut icon" href="/assets/favicon/favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="shortcut icon" href="/assets/favicon/biswarupmurmu.png" type="image/x-icon">
 
     </head>
     <body theme ="light">
-
         {{content}}
-
-        <script src="/javascript/main.js"></script>
+        {% include footer.html %}
     </body>
 
 </html>
