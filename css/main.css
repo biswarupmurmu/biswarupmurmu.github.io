@@ -33,6 +33,28 @@ h1 {
     color: var(--accent-color);
 }
 
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 100,
+        'GRAD' -25,
+        'opsz' 20
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 0 1rem 0;
+    gap: 1rem;
+    width: min(100%, 50rem);
+}
+
+nav a {
+    text-decoration: none;
+}
+
 .page-wrapper *,
 .section *,
 .page-wrapper,
@@ -67,6 +89,7 @@ h1 {
 .title {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
     margin-bottom: 0.5rem;
 }
