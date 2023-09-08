@@ -8,6 +8,6 @@
 - Weather:
   title: "Weather App"
   duration: "Dec'22 to Jan'23"
-  description: "A simple weather application with a GUI where user can save the weather report"
+  description: "A simple weather application with a GUI where user can save the weather report."
   tech: "Python"
   source_code: "https://github.com/biswarupmurmu/Weather-Application"
