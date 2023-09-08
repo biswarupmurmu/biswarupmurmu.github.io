@@ -25,6 +25,8 @@ permalink: /
         </div>
         {% endfor %}
     </div>
+    {% assign post_count = site.posts | size %}
+    {% if post_count > 0 %}
     <div>
         <h3>Blog/</h3>
         {% for post in site.posts limit:2 %}
@@ -43,4 +45,5 @@ permalink: /
         </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
