@@ -3,11 +3,13 @@
 
     --light-text-color: rgb(0, 0, 0);
     --light-body-background-color: rgb(255, 255, 255);
+    --light-code-among-normal-text-background: rgb(230, 230, 230);
 }
 
 [theme='dark'] {
     --dark-text-color: rgb(180, 180, 180);
     --dark-body-background-color: rgb(0, 0, 0);
+    --dark-code-among-normal-text-background: rgb(50, 50, 50);
 }
 
 * {
@@ -94,7 +96,6 @@ nav a {
 .title {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     align-items: center;
     margin-bottom: 0.5rem;
 }
@@ -136,4 +137,9 @@ footer div {
 pre {
     overflow-x: auto;
     padding: 0.5rem;
+}
+
+p>code {
+    background-color: var(--dark-code-among-normal-text-background,var(--light-code-among-normal-text-background));
+    padding: 0 0.25rem 0 0.2rem;
 }
