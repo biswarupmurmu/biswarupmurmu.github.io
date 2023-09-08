@@ -122,3 +122,18 @@ footer div {
     gap: 1rem;
     padding-top: 2rem;
 }
+
+/* Post related styles */
+.post-wrapper {
+    width: min(100%,50rem);
+    flex-grow: 1;
+}
+
+.post-wrapper img {
+    max-width: 100%;
+}
+
+pre {
+    overflow-x: auto;
+    padding: 0.5rem;
+}

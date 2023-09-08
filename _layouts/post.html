@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<div class="post-wrapper">
+    <h1 style="margin-bottom: 0.25rem;">{{page.title}}</h1>
+    <time datetime="{{page.date | date_to_xmlschema}}">{{ page.date | date: "%b %d, %Y"}}</time>
+    {{content}}
+    <p>
+        <b>Tags : </b>
+        {% for tag in page.tags %}
+        <a href="#">{{tag}}</a>
+        {% endfor %}
+    </p>
+</div>
