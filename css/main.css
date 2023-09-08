@@ -61,6 +61,10 @@ nav a {
     text-decoration: none;
 }
 
+nav .is-active {
+    text-decoration: underline var(--accent-color);
+}
+
 .page-wrapper *,
 .section *,
 .page-wrapper,
@@ -126,7 +130,7 @@ footer div {
 
 /* Post related styles */
 .post-wrapper {
-    width: min(100%,50rem);
+    width: min(100%, 50rem);
     flex-grow: 1;
 }
 
@@ -140,6 +144,6 @@ pre {
 }
 
 p>code {
-    background-color: var(--dark-code-among-normal-text-background,var(--light-code-among-normal-text-background));
+    background-color: var(--dark-code-among-normal-text-background, var(--light-code-among-normal-text-background));
     padding: 0 0.25rem 0 0.2rem;
 }
