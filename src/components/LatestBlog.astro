@@ -1,0 +1,127 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const latestPost = posts.sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+)[0];
+
+if (!latestPost) return;
+---
+
+<section class="latest-text-only">
+	<div class="meta-header">
+		<span class="indicator">{">>"}</span>
+		<span class="label">{latestPost.data.title}</span>
+		<span class="date"
+			>[{latestPost.data.pubDate.toISOString().slice(0, 10)}]</span
+		>
+	</div>
+
+	<a href={`/blog/${latestPost.id}/`} class="content-link">
+		<p class="desc">{latestPost.data.description}</p>
+
+		<div class="footer">
+			<span class="tag"
+				>#{
+					latestPost.data.tags ? latestPost.data.tags[0] : "system"
+				}</span
+			>
+			<span class="arrow">{"-->"}</span>
+		</div>
+	</a>
+</section>
+
+<style>
+	.latest-text-only {
+		justify-content: center; /* Center it vertically if it's shorter than Intro */
+		font-family: "Menlo", "Monaco", "Courier New", monospace;
+	}
+
+	/* The Header Line */
+	.meta-header {
+		font-size: 0.75rem;
+		color: #888;
+		margin-bottom: 0.8rem;
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.indicator {
+		color: #000;
+		font-weight: bold;
+		animation: blink 2s infinite;
+	}
+	.label {
+		font-weight: 700;
+		color: #000;
+	}
+	.date {
+		color: #888;
+	}
+
+	/* The Link Wrapper */
+	.content-link {
+		text-decoration: none;
+		display: block;
+		border-left: 2px solid #eee; /* Subtle guide line */
+		padding-left: 1rem;
+		transition: border-color 0.2s;
+	}
+
+	.content-link:hover {
+		border-color: #000; /* Darken line on hover */
+	}
+
+	.title {
+		font-family: sans-serif;
+		font-size: 1rem;
+		font-weight: 800;
+		color: #000;
+		margin: 0 0 0.8rem 0;
+		line-height: 1.2;
+	}
+
+	.desc {
+		font-size: 0.9rem;
+		color: #555;
+		line-height: 1.5;
+		margin-bottom: 1rem;
+
+		/* Clamp to 3 lines */
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.footer {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.8rem;
+		color: #000;
+		font-weight: 700;
+	}
+
+	.arrow {
+		transition: transform 0.2s;
+	}
+
+	.content-link:hover .arrow {
+		transform: translateX(5px);
+	}
+
+	@keyframes blink {
+		50% {
+			opacity: 0;
+		}
+	}
+
+	/* Mobile Tweak */
+	@media (max-width: 600px) {
+		.latest-text-only {
+			padding: 0;
+		}
+	}
+</style>

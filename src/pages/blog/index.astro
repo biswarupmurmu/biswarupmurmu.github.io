@@ -1,0 +1,170 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+// 1. Fetch and Sort
+const allPosts = (await getCollection("blog")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// 2. Group by Year
+const postsByYear = allPosts.reduce((acc, post) => {
+	const year = post.data.pubDate.getFullYear();
+	if (!acc[year]) acc[year] = [];
+	acc[year].push(post);
+	return acc;
+}, {});
+
+const years = Object.keys(postsByYear).sort((a, b) => b - a);
+---
+
+<Layout pageTitle="System Logs">
+	<header class="page-header">
+		<h1 class="path">~/blog/archive/</h1>
+		<p class="stats">{allPosts.length} blogs found</p>
+	</header>
+
+	<div class="archive-tree">
+		{
+			years.map((year) => (
+				<div class="year-group">
+					<div class="year-label">
+						<span class="folder-icon">📂</span>
+						<span class="year-text">{year}</span>
+					</div>
+
+					<div class="posts-list">
+						{postsByYear[year].map((post) => (
+							<a href={`/blog/${post.id}/`} class="post-row">
+								<span class="date-col">
+									{post.data.pubDate
+										.toISOString()
+										.slice(5, 10)}
+								</span>
+
+								<span class="title-col">{post.data.title}</span>
+							</a>
+						))}
+					</div>
+				</div>
+			))
+		}
+	</div>
+</Layout>
+
+<style>
+	/* Header - Very Clean */
+	.page-header {
+		border-bottom: 1px solid #f0f0f0; /* Extremely subtle divider */
+		padding-bottom: 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+	}
+
+	.path {
+		margin: 0;
+		font-size: 1.1rem;
+		font-weight: 600;
+		color: #333; /* Dark Gray, not Black */
+	}
+
+	.stats {
+		margin: 0;
+		font-size: 0.8rem;
+		color: #999; /* Faded stats */
+	}
+
+	/* Archive Layout */
+	.archive-tree {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem; /* More breathing room between years */
+	}
+
+	.year-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+	}
+
+	.year-label {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-weight: 600;
+		font-size: 1rem;
+		color: #525252; /* Medium Gray */
+	}
+
+	.folder-icon {
+		font-size: 0.9rem;
+		opacity: 0.7; /* Make the emoji slightly transparent */
+	}
+
+	/* The Tree Line */
+	.posts-list {
+		display: flex;
+		flex-direction: column;
+		/* Use a solid, very light gray line instead of dashed */
+		border-left: 1px solid #f3f3f3;
+		margin-left: 0.5rem;
+		padding-left: 1.5rem;
+		gap: 1rem;
+	}
+
+	.post-row {
+		display: flex;
+		align-items: baseline;
+		gap: 1.5rem;
+		text-decoration: none;
+		font-size: 0.95rem;
+		transition: transform 0.2s;
+	}
+
+	.post-row:hover {
+		transform: translateX(4px);
+	}
+
+	/* Columns */
+	.date-col {
+		color: #a3a3a3; /* Very light gray for dates */
+		font-size: 0.8rem;
+		font-family: monospace;
+		flex-shrink: 0;
+	}
+
+	.title-col {
+		/* The "Subtle" look: Start with a readable gray */
+		color: #737373;
+		font-weight: 400;
+		font-family: sans-serif;
+		line-height: 1.4;
+		transition: color 0.2s ease;
+	}
+
+	/* On Hover: Bring it to life */
+	.post-row:hover .title-col {
+		color: #171717; /* Almost Black */
+		text-decoration: underline;
+		text-decoration-color: #ddd; /* Subtle underline color */
+	}
+
+	.nav-footer {
+		margin-top: 2rem;
+		border-top: 1px solid #fafafa; /* Almost invisible footer line */
+		padding-top: 2rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	/* Mobile Tweak */
+	@media (max-width: 500px) {
+		.post-row {
+			gap: 0.8rem;
+		}
+		.date-col {
+			font-size: 0.75rem;
+		}
+	}
+</style>

@@ -1,0 +1,33 @@
+---
+/* src/components/Nav.astro */
+---
+<nav class="nav-container">
+  <a href="/" class="nav-link">/home</a>
+  <a href="/blog" class="nav-link">/blog</a>
+  <a href="https://github.com/YOUR_USERNAME" class="nav-link">/github</a>
+  <a href="mailto:you@example.com" class="nav-link">/contact</a>
+</nav>
+
+<style>
+  .nav-container {
+    margin: 2rem;
+    display: flex;
+    gap: 1.5rem; /* Space between links */
+	justify-content : space-evenly;
+  }
+
+  .nav-link {
+    font-family: monospace;
+    color: #888;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: #4ade80; /* Match the green cursor */
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+</style>
+

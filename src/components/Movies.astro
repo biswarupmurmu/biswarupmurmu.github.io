@@ -1,0 +1,223 @@
+---
+import Parser from "rss-parser";
+import { LETTERBOXD_USERNAME } from "../consts";
+const parser = new Parser();
+
+// Fetch the feed
+const feed = await parser.parseURL(
+	`https://letterboxd.com/${LETTERBOXD_USERNAME}/rss/`,
+);
+
+const recentMovies = feed.items.slice(0, 6).map((item) => {
+	// 1. Extract Image from HTML content
+	const htmlContent = item.description || item.content || "";
+	const imgMatch = htmlContent.match(/src="([^"]+)"/);
+
+	// 2. Extract Rating from Title (e.g. "Dune - ★★★★★")
+	const titleParts = item.title ? item.title.split(" - ") : ["Unknown"];
+	const title = titleParts[0];
+	const rating = titleParts[1] || "Watched";
+
+	return {
+		title,
+		rating,
+		link: item.link,
+		image: imgMatch ? imgMatch[1] : null,
+	};
+});
+---
+
+<section class="media-log">
+	<div class="meta-header">
+		<span class="indicator">{">>"}</span>
+		<span class="label">RECENT_WATCHES</span>
+	</div>
+
+	<div class="grid">
+		{
+			recentMovies.map((movie) => (
+				<a class="movie-card">
+					<div class="poster-frame">
+						{movie.image ? (
+							<img src={movie.image} alt={movie.title} />
+						) : (
+							<div class="no-image">NO_DATA</div>
+						)}
+
+						<div class="rating-overlay">
+							<span>{movie.rating}</span>
+						</div>
+					</div>
+
+					<div class="meta-row">
+						<span class="movie-title">{movie.title}</span>
+					</div>
+				</a>
+			))
+		}
+	</div>
+
+	<div class="footer">
+		<a
+			href={`https://letterboxd.com/${LETTERBOXD_USERNAME}/`}
+			target="_blank"
+			class="view-all">letterboxd -></a
+		>
+	</div>
+</section>
+
+<style>
+	.media-log {
+		width: 100%;
+		max-width: 44rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-top: 3rem;
+		/* Safety: Prevent horizontal scroll on the main container */
+		overflow-x: hidden;
+	}
+
+	/* Header */
+	.meta-header {
+		font-family: "Menlo", "Monaco", monospace;
+		font-size: 0.75rem;
+		color: #888;
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+		border-bottom: 1px solid #eee;
+		padding-bottom: 0.5rem;
+	}
+	.indicator {
+		color: #000;
+		font-weight: bold;
+	}
+	.label {
+		font-weight: 700;
+		color: #000;
+	}
+
+	/* Grid Layout */
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+		width: 100%; /* Force grid to stay inside parent */
+	}
+
+	.movie-card {
+		text-decoration: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		/* CRITICAL FIX: prevents grid item from expanding beyond 1fr */
+		min-width: 0;
+		width: 100%;
+	}
+
+	/* --- THE POSTER --- */
+	.poster-frame {
+		position: relative;
+		width: 100%; /* Fill the card width exactly */
+		aspect-ratio: 2/3;
+		overflow: hidden;
+		background: #f4f4f5;
+		border: 1px solid #e5e5e5;
+	}
+
+	.poster-frame img {
+		/* CRITICAL FIX: Force image to obey the frame */
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover; /* Crops image to fit the 2/3 ratio */
+
+		filter: grayscale(100%) contrast(90%);
+		transition:
+			filter 0.3s ease,
+			transform 0.3s ease;
+	}
+
+	/* Hover Effects */
+	.movie-card:hover .poster-frame {
+		border-color: #000;
+	}
+	.movie-card:hover img {
+		filter: grayscale(0%) contrast(100%);
+		transform: scale(1.05);
+	}
+
+	/* Rating Overlay */
+	.rating-overlay {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba(0, 0, 0, 0.8);
+		color: #fff;
+		font-family: "Menlo", monospace;
+		font-size: 0.75rem;
+		padding: 0.4rem;
+		text-align: center;
+		transform: translateY(100%);
+		transition: transform 0.2s ease;
+	}
+	.movie-card:hover .rating-overlay {
+		transform: translateY(0);
+	}
+
+	/* Metadata */
+	.meta-row {
+		display: flex;
+	}
+
+	.movie-title {
+		font-family: "Menlo", monospace;
+		font-size: 0.75rem;
+		color: #666;
+		line-height: 1.3;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Ensure text doesn't push the width out */
+		max-width: 100%;
+	}
+
+	.movie-card:hover .movie-title {
+		color: #000;
+		text-decoration: underline;
+	}
+
+	/* Footer */
+	.footer {
+		margin-top: 0.5rem;
+		font-family: "Menlo", monospace;
+		font-size: 0.8rem;
+		margin-left: 0.2rem;
+	}
+	.view-all {
+		color: #888;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.view-all:hover {
+		color: #000;
+		text-decoration: underline;
+	}
+
+	/* Mobile: Force 3 columns to keep the "3x2" layout */
+	@media (max-width: 600px) {
+		.grid {
+			/* CHANGED from 2 to 3 */
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0.5rem; /* Reduce gap slightly so posters aren't too small */
+		}
+
+		/* Optional: Make text smaller so it fits under small posters */
+		.movie-title {
+			font-size: 0.65rem;
+		}
+	}
+</style>

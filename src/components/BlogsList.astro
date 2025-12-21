@@ -1,0 +1,167 @@
+---
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 7);
+
+// Helper function to map tags to "File Icons"
+const getFileIcon = (tags) => {
+  const mainTag = tags?.[0]?.toLowerCase() || 'default';
+  
+  // Add your own mappings here!
+  const iconMap = {
+    'linux': '🐧',
+    'arch': '⚓',
+    'code': '💻',
+    'dev': '⚡',
+    'network': '🌐',
+    'security': '🔒',
+    'hardware': '🔌',
+    'book': '📚',
+    'life': '🌱',
+    'default': '📄' // The fallback file icon
+  };
+
+  return iconMap[mainTag] || iconMap['default'];
+};
+---
+
+{recentPosts.length !== 0 &&
+<section class="logs-minimal">
+  <div class="meta-header">
+<span class="indicator">{">>"}</span>
+    <span class="label">BLOG_POSTS</span>
+  </div>
+
+  <div class="list">
+    {recentPosts.map((post) => (
+      <a href={`/blog/${post.id}/`} class="log-entry">
+        
+        <div class="entry-meta">
+          <span class="date">[{post.data.pubDate.toISOString().slice(0, 10)}]</span>
+          <span class="tag">#{post.data.tags ? post.data.tags[0] : 'file'}</span>
+        </div>
+
+        <div class="title-row">
+          <span class="file-icon">{getFileIcon(post.data.tags)}</span>
+          <h4 class="entry-title">{post.data.title}</h4>
+        </div>
+        
+      </a>
+    ))}
+  </div>
+
+  <div class="footer">
+		<a href="/blog" class="view-all">{"view_all_archives ->"}</a>
+  </div>
+
+</section>
+}
+
+<style>
+  .logs-minimal {
+    width: 100%;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .meta-header {
+    font-size: 0.75rem;
+    color: #888;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 0.5rem;
+  }
+
+  .indicator { color: #000; font-weight: bold; }
+  .label { font-weight: 700; color: #000; }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .log-entry {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem; 
+    transition: transform 0.2s;
+  }
+
+  .log-entry:hover {
+    /* transform: translateX(5px); */
+  }
+
+  .entry-meta {
+    font-size: 0.75rem;
+    color: #999;
+    display: flex;
+    gap: 0.8rem;
+    margin-left: 1.8rem; /* Indent meta to align with title text, not icon */
+  }
+
+  .tag { color: #aaa; }
+
+  /* New Row for Icon + Title */
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  .file-icon {
+    font-size: 0.9rem;
+    filter: grayscale(100%); /* Start icon as B&W/Gray */
+    transition: filter 0.2s;
+  }
+
+  /* Reveal icon color on hover */
+  .log-entry:hover .file-icon {
+    filter: grayscale(0%);
+  }
+
+  .entry-title {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 0.95rem; 
+    color: #525252; /* Light Gray Title */
+    font-weight: 400; 
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+
+  .log-entry:hover .entry-title {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .footer {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    <!-- margin-left: 1.8rem; /* Align with content */ -->
+  }
+
+  .view-all {
+    color: #888;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .view-all:hover {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .logs-minimal { padding: 0; }
+  }
+</style>
+
