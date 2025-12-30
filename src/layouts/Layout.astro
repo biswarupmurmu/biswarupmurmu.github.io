@@ -1,5 +1,7 @@
 ---
 import Footer from '../components/Footer.astro';
+import Analytics from '../components/Analytics.astro';
+
 interface Props {
 	pageTitle: string;
 }
@@ -25,6 +27,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<Footer />
     </div>
   </div>
+  <Analytics />
 	</body>
 </html>
 
