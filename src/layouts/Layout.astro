@@ -1,13 +1,13 @@
 ---
-import Footer from '../components/Footer.astro';
-import Analytics from '../components/Analytics.astro';
+import Footer from "../components/Footer.astro";
+import Analytics from "../components/Analytics.astro";
 
 interface Props {
 	pageTitle: string;
 }
 
 const { pageTitle } = Astro.props;
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 ---
 
 <!doctype html>
@@ -21,13 +21,13 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<title>{pageTitle} | {SITE_TITLE}</title>
 	</head>
 	<body>
-  <div class="page-wrapper">
-    <div class="content-container">
-		<slot />
-		<Footer />
-    </div>
-  </div>
-  <Analytics />
+		<div class="page-wrapper">
+			<div class="content-container">
+				<slot />
+				<Footer />
+			</div>
+		</div>
+		<Analytics />
 	</body>
 </html>
 
@@ -37,20 +37,19 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		margin: 0;
 	}
 
-  .page-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
-    min-height: 100vh;
-    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-  }
+	.page-wrapper {
+		display: flex;
+		justify-content: center;
+		padding: 2rem;
+		min-height: 100vh;
+		font-family: "Menlo", "Monaco", "Courier New", monospace;
+	}
 
-  .content-container {
-    width: 100%;
-    max-width: 38rem; /* Keeps the list compact and readable */
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-  }
+	.content-container {
+		width: 100%;
+		max-width: 38rem; /* Keeps the list compact and readable */
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
 </style>
-
